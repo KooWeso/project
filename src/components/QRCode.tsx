@@ -137,6 +137,7 @@ export function QRCode({ redirectUrl }: { redirectUrl: string }) {
         background: 'var(--tgui--secondary_bg_color)',
         gap: 16,
         display: 'flex',
+        height: '100%',
         flexDirection: 'column',
       }}
     >
@@ -291,7 +292,6 @@ export function QRCode({ redirectUrl }: { redirectUrl: string }) {
           </div>
         </Modal>
       </Section>
-
       <Section>
         <Cell
           Component='label'
@@ -308,7 +308,8 @@ export function QRCode({ redirectUrl }: { redirectUrl: string }) {
         </Cell>
         <div
           style={{
-            height: 72,
+            background: 'var(--tgui--secondary_bg_color)',
+            marginBottom: 72,
           }}
         />
       </Section>
