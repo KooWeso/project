@@ -312,7 +312,7 @@ export function QRCode({ redirectUrl }: { redirectUrl: string }) {
         <div
           style={{
             background: 'var(--tgui--secondary_bg_color)',
-            marginBottom: 72,
+            paddingBottom: 72,
           }}
         />
       </Section>
