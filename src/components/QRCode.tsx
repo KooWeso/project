@@ -112,9 +112,13 @@ export function QRCode({ redirectUrl }: { redirectUrl: string }) {
     }
     if (extracheckout.length > 0) data.extra_checkout_fields = extracheckout
     qrCode.update({
-      data: BASE_URL + btoa(JSON.stringify(data)),
+      data:
+        BASE_URL +
+        bytesToBase64(new TextEncoder().encode(JSON.stringify(data))),
     })
-    setUrl(BASE_URL + btoa(JSON.stringify(data)))
+    setUrl(
+      BASE_URL + bytesToBase64(new TextEncoder().encode(JSON.stringify(data)))
+    )
   }, [extracheckout, redirectUrl])
 
   useEffect(() => {
@@ -327,4 +331,11 @@ export function QRCode({ redirectUrl }: { redirectUrl: string }) {
       </FixedLayout>
     </List>
   )
+}
+
+function bytesToBase64(bytes: Uint8Array) {
+  const binString = Array.from(bytes, (byte) =>
+    String.fromCodePoint(byte)
+  ).join('')
+  return btoa(binString)
 }
