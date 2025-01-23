@@ -7,6 +7,7 @@ import {
   FixedLayout,
   IconButton,
   Input,
+  List,
   Modal,
   Section,
   Switch,
@@ -132,14 +133,16 @@ export function QRCode({ redirectUrl }: { redirectUrl: string }) {
   }
 
   return (
-    <div
-      style={{
-        background: 'var(--tgui--secondary_bg_color)',
-        gap: 16,
-        display: 'flex',
-        height: '100%',
-        flexDirection: 'column',
-      }}
+    <List
+      style={
+        {
+          // background: 'var(--tgui--secondary_bg_color)',
+          // gap: 16,
+          // display: 'flex',
+          // height: '100%',
+          // flexDirection: 'column',
+        }
+      }
     >
       <Section>
         <div
@@ -322,6 +325,6 @@ export function QRCode({ redirectUrl }: { redirectUrl: string }) {
           Share QR Code
         </Button>
       </FixedLayout>
-    </div>
+    </List>
   )
 }
