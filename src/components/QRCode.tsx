@@ -10,6 +10,7 @@ import {
   List,
   Modal,
   Section,
+  Snackbar,
   Switch,
   Typography,
 } from '@telegram-apps/telegram-ui'
@@ -97,6 +98,9 @@ export function QRCode({ redirectUrl }: { redirectUrl: string }) {
   const qrRef = useRef<HTMLDivElement>(null)
   const [url, setUrl] = useState<string>('')
   const [transparent, setTransparent] = useState<boolean>(false)
+  const [snackbarOpen, setSnackbarOpen] = useState<
+    'Copy success' | 'Copy denied' | false
+  >(false)
   const [fields, setFields] = useState<IFields>(fieldsInit)
   const [extracheckout, setExtracheckout] = useState<IFields[]>([])
 
@@ -140,10 +144,12 @@ export function QRCode({ redirectUrl }: { redirectUrl: string }) {
   const onClickCopy = async () => {
     try {
       await navigator.clipboard.writeText(url)
+      setSnackbarOpen('Copy success')
     } catch (error) {
       if (error instanceof DOMException)
         console.error('Writing to the clipboard is not allowed')
       else console.error(error)
+      setSnackbarOpen('Copy denied')
     }
   }
 
@@ -186,7 +192,7 @@ export function QRCode({ redirectUrl }: { redirectUrl: string }) {
       </Section>
 
       <Cell
-        onClick={onClickCopy}
+        onClick={() => onClickCopy()}
         style={{
           backgroundColor: 'var(--tgui--bg_color)',
           borderRadius: 12,
@@ -350,6 +356,11 @@ export function QRCode({ redirectUrl }: { redirectUrl: string }) {
           Share QR Code
         </Button>
       </FixedLayout>
+      {Boolean(snackbarOpen) && (
+        <Snackbar onClose={() => setSnackbarOpen(false)}>
+          {snackbarOpen}
+        </Snackbar>
+      )}
     </List>
   )
 }
