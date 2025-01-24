@@ -16,6 +16,7 @@ import {
 import { Icon28AddCircle } from '@telegram-apps/telegram-ui/dist/icons/28/add_circle'
 import { Icon28Attach } from '@telegram-apps/telegram-ui/dist/icons/28/attach'
 import { Icon24Cancel } from '@telegram-apps/telegram-ui/dist/icons/24/cancel'
+import { Icon20Copy } from '@telegram-apps/telegram-ui/dist/icons/20/copy'
 import { ModalHeader } from '@telegram-apps/telegram-ui/dist/components/Overlays/Modal/components/ModalHeader/ModalHeader'
 const BASE_URL = 'https://t.me/MarketplaceTeleBot/shops?startapp='
 
@@ -136,19 +137,33 @@ export function QRCode({ redirectUrl }: { redirectUrl: string }) {
     })
   }
 
+  const onClickCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(url)
+    } catch (error) {
+      if (error instanceof DOMException)
+        console.error('Writing to the clipboard is not allowed')
+      else console.error(error)
+    }
+  }
+
   return (
     <List
-      style={
-        {
-          // background: 'var(--tgui--secondary_bg_color)',
-          // gap: 16,
-          // display: 'flex',
-          // height: '100%',
-          // flexDirection: 'column',
-        }
-      }
+      style={{
+        // background: 'var(--tgui--secondary_bg_color)',
+        // gap: 16,
+        // display: 'flex',
+        // height: '100%',
+        // flexDirection: 'column',
+        paddingInline: 16,
+      }}
     >
-      <Section>
+      <Section
+        style={{
+          borderRadius: 12,
+          overflow: 'hidden',
+        }}
+      >
         <div
           style={{
             paddingBlock: 16,
@@ -169,18 +184,24 @@ export function QRCode({ redirectUrl }: { redirectUrl: string }) {
           </div>
         </div>
       </Section>
+
       <Cell
+        onClick={onClickCopy}
         style={{
-          color: 'var(--tgui--link_color)',
-          textDecoration: 'underline',
+          backgroundColor: 'var(--tgui--bg_color)',
+          borderRadius: 12,
         }}
-        Component='a'
-        target='_blank'
-        href={url}
+        Component='label'
+        after={
+          <IconButton mode='gray'>
+            <Icon20Copy />
+          </IconButton>
+        }
       >
-        {url}
+        Copy QR code link
       </Cell>
-      <Section>
+
+      <Section style={{ borderRadius: 12, overflow: 'hidden' }}>
         <Cell before={<Icon28Attach />} subtitle='You can add extra checkout'>
           Extra checkout
         </Cell>
@@ -299,7 +320,7 @@ export function QRCode({ redirectUrl }: { redirectUrl: string }) {
           </div>
         </Modal>
       </Section>
-      <Section>
+      <Section style={{ borderRadius: 12, overflow: 'hidden' }}>
         <Cell
           Component='label'
           after={
@@ -313,13 +334,13 @@ export function QRCode({ redirectUrl }: { redirectUrl: string }) {
         >
           Transparent Background
         </Cell>
-        <div
-          style={{
-            background: 'var(--tgui--secondary_bg_color)',
-            paddingBottom: 72,
-          }}
-        />
       </Section>
+      <div
+        style={{
+          background: 'var(--tgui--secondary_bg_color)',
+          paddingBottom: 72,
+        }}
+      />
       <FixedLayout
         style={{
           padding: 16,
